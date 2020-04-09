@@ -63,6 +63,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ad
 
 This section has moved here: https://repository-github.netlify.com
 
-### `npm run build` fails to minify
+### `Screenshot` 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+ 
+
+
