@@ -18,6 +18,7 @@ import { withStyles } from "@material-ui/core/styles";
 import CardRepo from "../component/cardRepo";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import axios from "axios";
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -47,6 +48,9 @@ class Drawers extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: [],
+      data2: [],
+      data3: [],
       search: "Zaviore",
     };
   }
@@ -57,9 +61,39 @@ class Drawers extends Component {
       search: e.target.value,
     });
   };
+  getRepo = (e) => {
+    e.preventDefault();
+    axios({
+      method: "get",
+      url: `https://api.github.com/users/${this.state.search}/repos`,
+      responseType: "json",
+    }).then((response) => {
+      this.setState({ data: response.data });
+    });
+
+    axios({
+      method: "get",
+      url: `https://api.github.com/users/${this.state.search}/followers`,
+      responseType: "json",
+    }).then((response) => {
+      this.setState({ data1: response.data });
+    });
+
+    axios({
+      method: "get",
+      url: `https://api.github.com/users/${this.state.search}/following`,
+      responseType: "json",
+    }).then((response) => {
+      this.setState({ data2: response.data });
+    });
+    this.setState({ search: "" });
+  };
 
   render() {
+    const { data, data1, data2 } = this.state;
     const { classes } = this.props;
+    console.log(data1, "asss");
+    const owner = this.state.data[0];
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -93,13 +127,16 @@ class Drawers extends Component {
             style={{ textAlign: "center" }}
           >
             <img
-              src={"a"}
+              src={owner && owner.owner.avatar_url}
               width="200px"
               height="200px"
               style={{ marginLeft: "0px", marginTop: "10px" }}
             />
-            <b> Zaviore </b>
-            <p>Follower: 0 Following: 0</p>
+            <b> {owner && owner.owner.login} </b>
+            <p>
+              Follower: {data1 && data1.length} Following :{" "}
+              {data2 && data2.length}{" "}
+            </p>
             <List>
               {["All Repository"].map((text, index) => (
                 <ListItem button key={text}>
@@ -121,21 +158,21 @@ class Drawers extends Component {
           <form>
             <input
               type="text"
-              placeholder="Search Repository"
+              placeholder="Search"
               onChange={this.handlechange}
               value={this.state.search}
-              style={{ marginBottom: "10px", padding: "8px", width: "500px" }}
+              style={{ marginBottom: "10px", padding: "8px", width: "400px" }}
             />
-            &nbsp;
             <Button
               variant=""
               disableElevation
+              onClick={this.getRepo}
               style={{ color: "white", backgroundColor: "#4caf50" }}
             >
               Search
             </Button>
           </form>
-          <CardRepo />
+          <CardRepo data={data} />
         </main>
       </div>
     );

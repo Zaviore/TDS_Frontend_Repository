@@ -27,6 +27,7 @@ const styles = (theme) => ({
 
 class CardRepo extends Component {
   render() {
+    const { data } = this.props;
     const { classes } = this.props;
 
     return (
@@ -40,82 +41,39 @@ class CardRepo extends Component {
         >
           Repository
         </h3>
-        <Card className={classes.root}>
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              style={{ fontWeight: "bold" }}
-            >
-              Name Repository
-            </Typography>
+        {data
+          ? data.map((value, index) => {
+              return (
+                <Card className={classes.root} key={index}>
+                  <CardContent>
+                    <Typography
+                      className={classes.title}
+                      color="textSecondary"
+                      style={{ fontWeight: "bold" }}
+                    >
+                      <a href={value.html_url}> {value.name}</a>
+                    </Typography>
 
-            <Typography className={classes.pos} color="textSecondary">
-              language script
-            </Typography>
-            <Typography style={{ color: "grey" }}>
-              <Button>
-                <Star style={{ width: "25px", color: "yellow" }} />2
-              </Button>
-              <Button>
-                <Share color="disabled" style={{ width: "25px" }} /> 1
-              </Button>{" "}
-              | 4 hours ago
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Card className={classes.root}>
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              style={{ fontWeight: "bold" }}
-            >
-              Name Repository
-            </Typography>
-
-            <Typography className={classes.pos} color="textSecondary">
-              language script
-            </Typography>
-            <Typography style={{ color: "grey" }}>
-              <Button>
-                <Star style={{ width: "25px", color: "yellow" }} />2
-              </Button>
-              <Button>
-                <Share color="disabled" style={{ width: "25px" }} /> 1
-              </Button>{" "}
-              | 4 hours ago
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Card className={classes.root}>
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              style={{ fontWeight: "bold" }}
-            >
-              Name Repository
-            </Typography>
-
-            <Typography className={classes.pos} color="textSecondary">
-              language script
-            </Typography>
-            <Typography style={{ color: "grey" }}>
-              <Button>
-                <Star style={{ width: "25px", color: "yellow" }} />2
-              </Button>
-              <Button>
-                <Share color="disabled" style={{ width: "25px" }} /> 1
-              </Button>{" "}
-              | 4 hours ago
-            </Typography>
-          </CardContent>
-        </Card>
-
-        <Pagination count={10} shape="rounded" />
+                    <Typography className={classes.pos} color="textSecondary">
+                      {value.language}
+                    </Typography>
+                    <Typography style={{ color: "grey" }}>
+                      <Button>
+                        <Star style={{ width: "25px", color: "yellow" }} />
+                        {value.stargazers_count}
+                      </Button>
+                      <Button>
+                        <Share color="disabled" style={{ width: "25px" }} />{" "}
+                        {value.forks_count}
+                      </Button>{" "}
+                      | {moment(value.updated_at, "YYYYMMDD").fromNow()}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              );
+            })
+          : null}
+        {(data.lenght = 0 ? <Pagination count={10} shape="rounded" /> : "")}
       </>
     );
   }
