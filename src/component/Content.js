@@ -132,7 +132,10 @@ class Drawers extends Component {
               height="200px"
               style={{ marginLeft: "0px", marginTop: "10px" }}
             />
-            <b> {owner && owner.owner.login} </b>
+            <b>
+              {" "}
+              <p>{owner && owner.owner.login}</p>{" "}
+            </b>
             <p>Follower: {data1 && data1.length}</p>
             <p>Following :{data2 && data2.length}</p>
             <List>
