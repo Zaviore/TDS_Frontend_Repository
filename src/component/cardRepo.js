@@ -30,6 +30,8 @@ class CardRepo extends Component {
     const { data } = this.props;
     const { classes } = this.props;
 
+    console.log(data);
+
     return (
       <>
         <h3
@@ -41,6 +43,7 @@ class CardRepo extends Component {
         >
           Repository
         </h3>
+
         {data
           ? data.map((value, index) => {
               return (
@@ -66,14 +69,18 @@ class CardRepo extends Component {
                         <Share color="disabled" style={{ width: "25px" }} />{" "}
                         {value.forks_count}
                       </Button>{" "}
-                      | {moment(value.updated_at, "YYYYMMDD").fromNow()}
+                      | Updated {moment(value.updated_at, "YYYYMMDD").fromNow()}
                     </Typography>
                   </CardContent>
                 </Card>
               );
             })
           : null}
-        {(data.lenght = 0 ? <Pagination count={10} shape="rounded" /> : "")}
+        {data.length == 0 ? (
+          "No Data Repository"
+        ) : (
+          <Pagination count={10} shape="rounded" />
+        )}
       </>
     );
   }

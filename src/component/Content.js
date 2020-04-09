@@ -17,7 +17,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import CardRepo from "../component/cardRepo";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import Info from "@material-ui/icons/Info";
 import axios from "axios";
 
 const drawerWidth = 240;
@@ -51,7 +51,7 @@ class Drawers extends Component {
       data: [],
       data2: [],
       data3: [],
-      search: "Zaviore",
+      search: "",
     };
   }
 
@@ -133,15 +133,13 @@ class Drawers extends Component {
               style={{ marginLeft: "0px", marginTop: "10px" }}
             />
             <b> {owner && owner.owner.login} </b>
-            <p>
-              Follower: {data1 && data1.length} Following :{" "}
-              {data2 && data2.length}{" "}
-            </p>
+            <p>Follower: {data1 && data1.length}</p>
+            <p>Following :{data2 && data2.length}</p>
             <List>
-              {["All Repository"].map((text, index) => (
-                <ListItem button key={text}>
+              {["All Repository", "About"].map((text, index) => (
+                <ListItem button key={text} checked="true">
                   <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    {index % 2 === 0 ? <InboxIcon /> : <Info />}
                   </ListItemIcon>
                   <ListItemText primary={text} />
                 </ListItem>
@@ -158,7 +156,7 @@ class Drawers extends Component {
           <form>
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Fill your user github.. (ex: Zaviore)"
               onChange={this.handlechange}
               value={this.state.search}
               style={{ marginBottom: "10px", padding: "8px", width: "400px" }}
