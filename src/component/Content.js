@@ -12,6 +12,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  Button,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import CardRepo from "../component/cardRepo";
@@ -120,14 +121,19 @@ class Drawers extends Component {
           <form>
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search Repository"
               onChange={this.handlechange}
               value={this.state.search}
-              style={{ marginBottom: "10px", padding: "8px" }}
+              style={{ marginBottom: "10px", padding: "8px", width: "500px" }}
             />
-            <button style={{ marginBottom: "10px", padding: "8px" }}>
+            &nbsp;
+            <Button
+              variant=""
+              disableElevation
+              style={{ color: "white", backgroundColor: "#4caf50" }}
+            >
               Search
-            </button>
+            </Button>
           </form>
           <CardRepo />
         </main>
